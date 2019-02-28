@@ -1,12 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>Get Text Center of Mass</title>
-</head>
-<body>
-	<script src="demo.js"></script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Get Text Center of Mass</title>
+    <style>
+      body {
+        margin: 50px;
+      }
+
+      canvas {
+        display: block;
+        background: gray;
+        margin-bottom: 50px;
+      }
+
+      @font-face {
+        font-family: "Netflix Sans";
+        src: url("https://ae.nflximg.net/monet/fonts/ltmd-bld/Web/EOT/NetflixSans_W_Md.eot");
+        src: url("https://ae.nflximg.net/monet/fonts/ltmd-bld/Web/EOT/NetflixSans_W_Md.eot?#iefix")
+            format("embedded-opentype"),
+          url("https://ae.nflximg.net/monet/fonts/ltmd-bld/Web/WOFF2/NetflixSans_W_Md.woff2")
+            format("woff2"),
+          url("https://ae.nflximg.net/monet/fonts/ltmd-bld/Web/WOFF/NetflixSans_W_Md.woff")
+            format("woff");
+        font-weight: 500;
+        font-style: normal;
+      }
+    </style>
+  </head>
+  <body>
+    <input type="text" name="change-text" id="change-text" />
+    <input
+      type="button"
+      name="change-text"
+      id="change-button"
+      value="Update Text"
+    />
+    <script src="demo.js"></script>
+  </body>
 </html>

@@ -1,14 +1,30 @@
-import TextMeasurer from './TextMeasurer'
+import TextMeasurer from "./TextMeasurer";
 
-window.measurer = new TextMeasurer()
-document.body.appendChild(measurer.canvas)
-const center = measurer.getCenterOfText('_-----')
-console.log('center', center)
+const textInput = document.getElementById("change-text");
+const changeBtn = document.getElementById("change-button");
 
-const normalizedCenter = center
-const ctx = measurer.context
-ctx.beginPath()
-ctx.strokeStyle = 'pink'
-ctx.moveTo(0, normalizedCenter)
-ctx.lineTo(measurer.canvas.width, normalizedCenter)
-ctx.stroke()
+window.measurer = new TextMeasurer({
+  fontFamily: "Netflix Sans",
+  fontSize: 30,
+  fontWeight: "normal"
+});
+document.body.insertBefore(measurer.canvas, textInput);
+const center = measurer.getCenterOfText("WATCH NOW");
+console.log("center", center);
+
+const normalizedCenter = center;
+const ctx = measurer.context;
+
+// drawTextCenterLine();
+
+changeBtn.addEventListener("click", () => {
+  measurer.getCenterOfText(textInput.value);
+});
+
+function drawTextCenterLine() {
+  ctx.beginPath();
+  ctx.strokeStyle = "pink";
+  ctx.moveTo(0, normalizedCenter);
+  ctx.lineTo(measurer.canvas.width, normalizedCenter);
+  ctx.stroke();
+}

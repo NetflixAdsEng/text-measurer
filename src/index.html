@@ -18,26 +18,105 @@
 
       @font-face {
         font-family: "Netflix Sans";
-        src: url("https://ae.nflximg.net/monet/fonts/ltmd-bld/Web/EOT/NetflixSans_W_Md.eot");
-        src: url("https://ae.nflximg.net/monet/fonts/ltmd-bld/Web/EOT/NetflixSans_W_Md.eot?#iefix")
-            format("embedded-opentype"),
-          url("https://ae.nflximg.net/monet/fonts/ltmd-bld/Web/WOFF2/NetflixSans_W_Md.woff2")
+        src: url("https://ae.nflximg.net/monet/fonts/ltmd-bld/Web/WOFF2/NetflixSans_W_Md.woff2")
             format("woff2"),
           url("https://ae.nflximg.net/monet/fonts/ltmd-bld/Web/WOFF/NetflixSans_W_Md.woff")
             format("woff");
         font-weight: 500;
         font-style: normal;
       }
+
+      @font-face {
+        font-family: "Graphik Thai";
+        src: url("https://ae.nflximg.net/monet/fonts/thai/GraphikTH-Medium.eot");
+        src: url("https://ae.nflximg.net/monet/fonts/thai/GraphikTH-Medium.eot?#iefix")
+            format("embedded-opentype"),
+          url("https://ae.nflximg.net/monet/fonts/thai/GraphikTH-Medium.woff2")
+            format("woff2"),
+          url("https://ae.nflximg.net/monet/fonts/thai/GraphikTH-Medium.woff")
+            format("woff");
+        font-weight: 500;
+        font-style: normal;
+      }
+
+      @font-face {
+        font-family: "Noto Sans Hebrew";
+        font-style: normal;
+        font-weight: 700;
+        src: url(//fonts.gstatic.com/ea/notosanshebrew/v4/NotoSansHebrew-Bold.eot);
+        src: url(//fonts.gstatic.com/ea/notosanshebrew/v4/NotoSansHebrew-Bold.eot?#iefix)
+            format("embedded-opentype"),
+          url(//fonts.gstatic.com/ea/notosanshebrew/v4/NotoSansHebrew-Bold.woff2)
+            format("woff2"),
+          url(//fonts.gstatic.com/ea/notosanshebrew/v4/NotoSansHebrew-Bold.woff)
+            format("woff"),
+          url(//fonts.gstatic.com/ea/notosanshebrew/v4/NotoSansHebrew-Bold.ttf)
+            format("truetype");
+      }
+
+      @font-face {
+        font-family: "Neue Helvetica Arab";
+        src: url("https://ae.nflximg.net/monet/fonts/arabic/HelveticaNeueArabicW20-75Bold.eot");
+        src: url("https://ae.nflximg.net/monet/fonts/arabic/HelveticaNeueArabicW20-75Bold.eot?#iefix")
+            format("embedded-opentype"),
+          url("https://ae.nflximg.net/monet/fonts/arabic/HelveticaNeueArabicW20-75Bold.woff2")
+            format("woff2"),
+          url("https://ae.nflximg.net/monet/fonts/arabic/HelveticaNeueArabicW20-75Bold.woff")
+            format("woff"),
+          url("https://ae.nflximg.net/monet/fonts/arabic/HelveticaNeueArabicW20-75Bold.ttf")
+            format("truetype"),
+          url("https://ae.nflximg.net/monet/fonts/arabic/HelveticaNeueArabicW20-75Bold.svg#Neue_Helvetica_Arab")
+            format("svg");
+        font-weight: 700;
+        font-style: normal;
+      }
     </style>
   </head>
   <body>
-    <input type="text" name="change-text" id="change-text" />
+    <input type="text" name="change-text" id="change-text" value="WATCH NOW" />
     <input
       type="button"
       name="change-text"
       id="change-button"
       value="Update Text"
     />
+    <input
+      type="checkbox"
+      id="toggle-text-centering"
+      name="toggle-text-centering"
+      name="toggle"
+      checked
+    />
+    <label for="toggle-text-centering">Center Text?</label>
+    <input
+      type="checkbox"
+      id="toggle-canvas-center"
+      name="toggle-canvas-center"
+      name="toggle"
+      checked
+    />
+    <label for="toggle-canvas-center">Draw Canvas Center?</label>
+    <input
+      type="checkbox"
+      id="toggle-measure-fn"
+      name="toggle-measure-fn"
+      name="toggle"
+      checked
+    />
+    <label for="toggle-measure-fn">Use Center of Mass</label>
+    <div>
+      <select id="copy-select">
+        <option value="">--Use stock copy?--</option>
+      </select>
+    </div>
+    <p>
+      <span style="background: aqua;">This color line</span> shows the center of
+      the canvas
+    </p>
+    <p>
+      <span style="background: magenta;">This color line</span> shows the center
+      of the text
+    </p>
     <script src="demo.js"></script>
   </body>
 </html>

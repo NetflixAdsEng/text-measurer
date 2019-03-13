@@ -65,6 +65,7 @@ class TextMeasurer {
     this._queueRecalc = false;
 
     // center text
+    // for debug purposes when rendering internal canvas
     if (centerText) {
       const fixingOffset = canvas.height / 2 - this._center;
       context.clearRect(0, 0, canvas.width, canvas.height);

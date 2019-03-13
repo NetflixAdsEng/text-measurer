@@ -2,7 +2,7 @@
   "name": "get-text-center-of-mass",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/TextMeasurer.js",
   "scripts": {
     "start": "static -a 0.0.0.0 -H '{\"Cache-Control\": \"    no-cache, must-revalidate\"}' dist",
     "watch": "parcel watch src/index.html --no-hmr",

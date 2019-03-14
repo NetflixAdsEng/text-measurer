@@ -74,6 +74,13 @@ function initMeasurer() {
       useCenterOfMass: useCM
     });
 
+    // show padding
+    const currFillStyle = ctx.fillStyle;
+    ctx.fillStyle = "#333";
+    ctx.fillRect(0, 0, canvas.width, measurer.pad);
+    ctx.fillRect(0, canvas.height - measurer.pad, canvas.width, measurer.pad);
+    ctx.fillStyle = currFillStyle;
+
     // canvas center
     drawCanvasCenter &&
       drawHorizLine(CENTER_OF_CANVAS_COLOR, Math.floor(canvas.height / 2));

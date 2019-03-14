@@ -12,12 +12,12 @@ class TextMeasurer {
     this._center = 0;
     this.fontFamily = fontFamily;
     this.fontWeight = fontWeight;
-    this.fontSize = fontSize;
+    this.fontSize = parseInt(fontSize, 10);
     this.canvas = document.createElement("canvas");
     this.context = this.canvas.getContext("2d");
     this.text = "";
     this._centerText = _centerText;
-    this.initializeCanvas();
+    this._initializeCanvas();
   }
 
   updateFont(fontOpts = {}) {
@@ -37,7 +37,7 @@ class TextMeasurer {
     }
   }
 
-  initializeCanvas() {
+  _initializeCanvas() {
     // approximating min necessary width to fit text
     this.canvas.width = this.fontSize * this.text.length;
     // adding padding to account for accents and such
@@ -51,12 +51,12 @@ class TextMeasurer {
     this.context.textAlign = "center";
   }
 
-  getCenterOfText(text, { centerText = false, useCenterOfMass = false } = {}) {
+  getCenterOfText(text, { centerText = false, useCenterOfMass = true } = {}) {
     const { canvas, context } = this;
 
     context.clearRect(0, 0, canvas.width, canvas.height);
     this.text = text || this.text;
-    this.initializeCanvas();
+    this._initializeCanvas();
     context.fillText(this.text, canvas.width / 2, this.pad, canvas.width);
     this._imageData = context.getImageData(0, 0, canvas.width, canvas.height);
 
@@ -78,6 +78,12 @@ class TextMeasurer {
     }
 
     return this._center;
+  }
+
+  // get offset which should vertically center text according to its calculated center
+  getCenteringOffset(text, centerCalcOpts) {
+    var center = this.getCenterOfText(text, centerCalcOpts);
+    return this.canvas.height / 2 - center;
   }
 }
 

@@ -6,12 +6,14 @@ class TextMeasurer {
     fontFamily = "Times",
     fontWeight = "normal",
     fontSize = 200,
-    _centerText = false
+    _centerText = false,
+    canvasHeight
   } = {}) {
     this._queueRecalc = true;
     this._center = 0;
     this.fontFamily = fontFamily;
     this.fontWeight = fontWeight;
+    this.canvasHeight = canvasHeight;
     this.fontSize = parseInt(fontSize, 10);
     this.canvas = document.createElement("canvas");
     this.context = this.canvas.getContext("2d");
@@ -41,8 +43,15 @@ class TextMeasurer {
     // approximating min necessary width to fit text
     this.canvas.width = this.fontSize * this.text.length;
     // adding padding to account for accents and such
-    this.pad = Math.round(PADDING_TO_HEIGHT * this.fontSize);
-    this.canvas.height = this.fontSize + this.pad * 2;
+    const defaultPad = Math.round(PADDING_TO_HEIGHT * this.fontSize);
+    const defaultHeight = this.fontSize + defaultPad * 2;
+    if (this.canvasHeight && this.canvasHeight >= defaultHeight) {
+      this.canvas.height = this.canvasHeight;
+      this.pad = (this.canvasHeight - this.fontSize) / 2;
+    } else {
+      this.pad = defaultPad;
+      this.canvas.height = defaultHeight;
+    }
     this._center = this.canvas.height / 2;
     this.context.font = `${this.fontWeight} ${this.fontSize}px ${
       this.fontFamily

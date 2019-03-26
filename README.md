@@ -1,6 +1,6 @@
 # Text Measurer
 
-Canvas text renderer that provides information on how a selection of text is rendered
+Utility for measuring text metrics by measuring HTML5 Canvas-rendered pixel data
 
 ## Usage
 

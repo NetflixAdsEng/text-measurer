@@ -1,6 +1,6 @@
 # Text Measurer
 
-Utility for measuring text metrics by measuring HTML5 Canvas-rendered pixel data
+Utility for calculating text metrics by measuring HTML5 Canvas-rendered pixel data
 
 ## Usage
 

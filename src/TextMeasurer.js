@@ -6,23 +6,23 @@ class TextMeasurer {
 		fontFamily = 'Times',
 		fontWeight = 'normal',
 		fontSize = 200,
-		_centerText = false,
 		canvasHeight,
+		_centerText = false,
 		_bgColor,
 		_textColor
 	} = {}) {
-		this._queueRecalc = true
-		this._center = 0
-		this.fontFamily = fontFamily
-		this.fontWeight = fontWeight
 		this.canvasHeight = canvasHeight
-		this.fontSize = parseInt(fontSize, 10)
 		this.canvas = document.createElement('canvas')
 		this.context = this.canvas.getContext('2d')
 		this.text = ''
 		this._centerText = _centerText
 		this._bgColor = _bgColor
 		this._textColor = _textColor
+		this.updateFont({
+			fontFamily,
+			fontWeight,
+			fontSize
+		})
 		this._initializeCanvas(this.text)
 	}
 
@@ -31,11 +31,15 @@ class TextMeasurer {
 		if (fontKeys.length) {
 			fontKeys.forEach(key => {
 				if (fontOpts[key]) {
-					this[key] = fontOpts[key]
+					if (fontOpts[key] === 'fontSize') {
+						this[key] = parseInt(fontOpts[key], 10)
+					} else {
+						this[key] = fontOpts[key]
+					}
 				}
 			})
 
-			this.context.font = `${this.fontWeight} ${this.fontSize}px ${this.fontFamily}`
+			// this.context.font = `${this.fontWeight} ${this.fontSize}px ${this.fontFamily}`
 		}
 	}
 
@@ -58,10 +62,55 @@ class TextMeasurer {
 		this.context.textAlign = 'center'
 	}
 
+	renderText(text) {
+		const { canvas, context } = this
+
+		// skip rerender if same text
+		if (text === this.text) {
+			return
+		}
+
+		// reset internal metric values
+		delete this._topY
+		delete this._bottomY
+		delete this._centerY
+
+		this.text = text || this.text
+		this._initializeCanvas(this.text)
+		context.clearRect(0, 0, canvas.width, canvas.height)
+		context.fillText(this.text, Math.round(canvas.width / 2), this.pad, canvas.width)
+		this.imageData = context.getImageData(0, 0, canvas.width, canvas.height)
+	}
+
+	// internal base function for calculating or pulling cached metric
+	_calcMetric(text, prop, measureFn) {
+		if (!this.imageData || (text && text !== this.text)) {
+			this.renderText(text)
+		}
+
+		if (this[prop] === undefined) {
+			this[prop] = measureFn(this.imageData)
+		}
+		return this[prop]
+	}
+
+	calcTopY(text) {
+		return this._calcMetric(text, '_topY', getTopY)
+	}
+
+	calcBottomY(text) {
+		return this._calcMetric(text, '_bottomY', getBottomY)
+	}
+
+	calcCenterY(text, { useCenterOfMass = false }) {
+		return this._calcMetric(text, '_centerY', useCenterOfMass ? getCM : getAbsCenter)
+	}
+
+	// keeping for demo at the moment
 	getCenterOfText(text, { centerText = false, useCenterOfMass = true, usePerChar = false } = {}) {
 		const { canvas, context } = this
 
-		// context.clearRect(0, 0, canvas.width, canvas.height);
+		context.clearRect(0, 0, canvas.width, canvas.height)
 
 		this.text = text || this.text
 		this._initializeCanvas(this.text)
@@ -81,7 +130,6 @@ class TextMeasurer {
 		this._center = measureResult.center
 		this._topY = measureResult.topY
 		this._bottomY = measureResult.bottomY
-		this._queueRecalc = false
 
 		// center text
 		// for debug purposes when rendering internal canvas
@@ -102,21 +150,14 @@ class TextMeasurer {
 		return this._center
 	}
 
-	getVerticalPoints() {
-		return {
-			top: this._topY - this.pad,
-			bottom: this._bottomY - this.pad
-		}
-	}
-
 	// get offset which should vertically center text according to its calculated center
 	getCenteringOffset(text, centerCalcOpts) {
 		const center = this.getCenterOfText(text, centerCalcOpts)
 		context.fillText(this.text, Math.round(canvas.width / 2), this.pad, canvas.width)
-		this._imageData = context.getImageData(0, 0, canvas.width, canvas.height)
+		this.imageData = context.getImageData(0, 0, canvas.width, canvas.height)
 
 		const measureFn = useCenterOfMass ? getCM : getAbsCenter
-		const measureResult = measureFn(this._imageData)
+		const measureResult = measureFn(this.imageData)
 		return this.canvas.height / 2 - center
 	}
 
@@ -145,8 +186,6 @@ class TextMeasurer {
 
 			return measureResult
 		})
-
-		console.log('centerResultsPerChar', centerResultsPerChar)
 
 		// reset canvas
 		this._initializeCanvas(text)
@@ -211,16 +250,8 @@ function getAbsCenter(imageData) {
 	const { data, height, width } = imageData
 	const imageDataRowWidth = 4 * width
 
-	let topY = 0
 	// find top y-value of text
-	for (let i = 3, n = data.length; i < n; i += 4) {
-		const rowIdx = Math.floor(i / imageDataRowWidth)
-		const alpha = data[i]
-		if (alpha > 0) {
-			topY = rowIdx
-			break
-		}
-	}
+	const topY = getTopY(imageData)
 
 	// find bottom y-value of text
 	const bottomY = getBottomY(imageData)
@@ -230,6 +261,20 @@ function getAbsCenter(imageData) {
 		bottomY,
 		topY
 	}
+}
+
+function getTopY(imageData) {
+	const { data, height, width } = imageData
+	const imageDataRowWidth = 4 * width
+
+	for (let i = 3, n = data.length; i < n; i += 4) {
+		const rowIdx = Math.floor(i / imageDataRowWidth)
+		const alpha = data[i]
+		if (alpha > 0) {
+			return rowIdx
+		}
+	}
+	return 0
 }
 
 function getBottomY(imageData) {

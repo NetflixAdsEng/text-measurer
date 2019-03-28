@@ -8,45 +8,23 @@
   "scripts": {
     "start": "static -a 0.0.0.0 -H '{\"Cache-Control\": \"    no-cache, must-revalidate\"}' demo",
     "watch": "parcel watch src/index.html --no-hmr -d demo",
-    "postinstall": "cd src/ && npm install",
     "dist": "parcel build src/TextMeasurer.js --out-file TextMeasurer.min.js --global TextMeasurer",
-    "init": "node lib/api.js --cmd install",
-    "updateDeps": "cd src/ && npm update",
     "pub": "npm install && npm run gitClean && np",
-    "syncVersion": "node lib/api.js --cmd sync && npm run track && npm run dist && npm run commitRelease",
-    "track": "node lib/api.js --cmd track",
-    "gitClean": "git add -A && git commit -m 'commits misc before publish' || true && git push origin master",
-    "commitRelease": "git add . && VER=`git describe --abbrev=0` && git commit -m $VER"
+    "gitClean": "git add -A && git commit -m 'commits misc before publish' || true && git push origin master"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@ff0000-ad-tech/debug": "^4.0.2",
-    "archiver": "^1.3.0",
     "babel-eslint": "^8.2.3",
-    "escape-regexp": "0.0.1",
     "eslint": "^4.15.0",
     "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-prettier": "^2.4.0",
     "fontfaceobserver": "^2.1.0",
-    "github-current-user": "^2.5.0",
-    "handlebars": "^4.0.10",
-    "http-server": "^0.11.1",
-    "jszip": "^3.1.5",
-    "minimist": "^1.2.0",
-    "moment": "^2.22.1",
-    "muffle": "^2.0.1",
-    "ncp": "^2.0.0",
     "node-static": "^0.7.11",
     "np": "^4.0.2",
     "parcel-bundler": "^1.11.0",
     "prettier": "^1.9.2",
-    "prettier-eslint": "^8.7.1",
-    "rimraf": "^2.6.1",
-    "uglify-js": "^3.4.0",
-    "uuid": "^3.0.1",
-    "varname": "^2.0.3",
-    "walk": "^2.3.9"
+    "prettier-eslint": "^8.7.1"
   }
 }

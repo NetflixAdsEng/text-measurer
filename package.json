@@ -12,7 +12,7 @@
     "dist": "parcel build src/TextMeasurer.js --out-file TextMeasurer.min.js --global TextMeasurer",
     "init": "node lib/api.js --cmd install",
     "updateDeps": "cd src/ && npm update",
-    "pub": "npm install && npm run gitClean && cd ./dist/npm && npm run pub",
+    "pub": "npm install && npm run gitClean && np",
     "syncVersion": "node lib/api.js --cmd sync && npm run track && npm run dist && npm run commitRelease",
     "track": "node lib/api.js --cmd track",
     "gitClean": "git add -A && git commit -m 'commits misc before publish' || true && git push origin master",
@@ -29,6 +29,7 @@
     "eslint": "^4.15.0",
     "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-prettier": "^2.4.0",
+    "fontfaceobserver": "^2.1.0",
     "github-current-user": "^2.5.0",
     "handlebars": "^4.0.10",
     "http-server": "^0.11.1",
@@ -37,16 +38,15 @@
     "moment": "^2.22.1",
     "muffle": "^2.0.1",
     "ncp": "^2.0.0",
+    "node-static": "^0.7.11",
     "np": "^4.0.2",
+    "parcel-bundler": "^1.11.0",
     "prettier": "^1.9.2",
     "prettier-eslint": "^8.7.1",
     "rimraf": "^2.6.1",
     "uglify-js": "^3.4.0",
     "uuid": "^3.0.1",
     "varname": "^2.0.3",
-    "walk": "^2.3.9",
-    "fontfaceobserver": "^2.1.0",
-    "node-static": "^0.7.11",
-    "parcel-bundler": "^1.11.0"
+    "walk": "^2.3.9"
   }
 }

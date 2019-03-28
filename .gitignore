@@ -2,3 +2,13 @@
 .DS_Store
 .cache
 demo
+
+# Netflix ignores
+node_modules/
+bower_components/
+log.txt
+.DS_Store
+*.pyc
+!/dist
+.init
+npm-debug.log
